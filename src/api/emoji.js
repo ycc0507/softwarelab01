@@ -6,7 +6,7 @@ export function getEmoji() {
     })
 }
 
-export function  tours(title,page=1,limit=10){
+export function emojipage(title,page=1,limit=10){
     return request({
         url:  '/tours',
         method: 'get',

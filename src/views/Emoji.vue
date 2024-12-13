@@ -1,5 +1,5 @@
 <template>
-    <div class="tours-container">
+    <div class="emojis-container">
         <el-card class="box-card">
         <div slot="header" class="header">
           <span class="header-title">旅游景点管理</span>
@@ -10,24 +10,21 @@
           </div>
         </div>
 
-        <el-table :data="tours" style="width: 100%">
-          <el-table-column label="图片" width="120">
+        <el-table :data="emojis" style="width: 100%">
+          <el-table-column label="表情" width="120">
             <template slot-scope="scope">
               <el-image
-                  :src="scope.row.img"
-                  class="tour-image"
+                  :src="getImgUrl(scope.row.id)"
+                  class="img"
                   :alt="scope.row.title"
                   fit="cover"
                   lazy
               />
             </template>
           </el-table-column>
-          <el-table-column prop="title" label="景点名称" min-width="180"></el-table-column>
-          <el-table-column prop="title_en" label="别名" min-width="180"></el-table-column>
-          <el-table-column prop="comments" label="评论数" min-width="100"></el-table-column>
-          <el-table-column prop="score" label="评分" min-width="100"></el-table-column>
-          <el-table-column prop="nation" label="国家" min-width="120"></el-table-column>
-          <el-table-column prop="city" label="城市" min-width="120"></el-table-column>
+          <el-table-column prop="emoji" label="表情名称" min-width="180"></el-table-column>
+          <el-table-column prop="username" label="发送人" min-width="100"></el-table-column>
+          <el-table-column prop="date" label="发送时间" min-width="100"></el-table-column>
           <el-table-column label="操作" min-width="180">
             <template slot-scope="scope">
               <el-button @click="handleEditTour(scope.row)" type="text" size="small">编辑</el-button>
@@ -81,16 +78,24 @@
   </template>
   
   <script>
+  import { emojipage } from '@/api/emoji';
   export default {
     data() {
     return {
       searchTitle: '',
-      tours: [],
-      // tours: [
-      //   { id: 1, name: '东京迪士尼度假区', alias: 'Tokyo Disney Resort', reviewCount: 1500, rating: 4.8, featuredReview: '非常美丽的景点', country: '日本', city: '东京' },
-      //   { id: 2, name: '东京塔', alias: 'Tokyo Tower', reviewCount: 2500, rating: 4.9, featuredReview: '历史悠久，气势恢宏', country: '日本', city: '东京' },
-      //   { id: 3, name: '三鹰之森吉卜力美术馆', alias: 'Ghibli Museum', reviewCount: 1800, rating: 4.7, featuredReview: '象征自由的地标', country: '日本', city: '东京' }
-      // ],
+      emojis: [],
+/*        emojis: [
+         { id: "0001", emoji: '呵呵', username: '张三', date: '2021-01-01' },
+         { id: "0002", emoji: '嘿嘿', username: '李四', date: '2021-01-02' },
+         { id: "0003", emoji: '笑哭了', username: '王五', date: '2021-01-03' },
+         { id: "0004", emoji: '吐舌', username: '赵六', date: '2021-01-04' },
+         { id: "0005", emoji: '翻白眼', username: '钱七', date: '2021-01-05' },
+         { id: "0006", emoji: '脸发烧', username: '孙八', date: '2021-01-06' },
+         { id: "0007", emoji: '害怕', username: '周九', date: '2021-01-07' },
+         { id: "0008", emoji: '怒火中烧', username: '吴十', date: '2021-01-08' },
+         { id: "0009", emoji: '睡着了', username: '郑十一', date: '2021-01-09' },
+         { id: "0010", emoji: '放声大哭', username: '王十二', date: '2021-01-10' },
+       ], */
       dialogVisible: false,
       form: {},
       formLabelWidth: '100px',
@@ -106,14 +111,17 @@
   },
   
  methods: {
+    getImgUrl(id) {
+      return require('@/assets/'+ id + '.png');
+    },
     fetchData() {
       this.loadData()
     },
     //加载数据
     loadData() {
-        tours(this.searchTitle, this.currentPage, this.pageSize).then(res => {
-          // console.log(res.data.data.records);
-          this.tours = res.data.data.records
+        emojipage(this.searchTitle, this.currentPage, this.pageSize).then(res => {
+          console.log(res.data.data.records);
+          this.emojis = res.data.data.records
           this.totalItems = res.data.data.total
         })
     },
