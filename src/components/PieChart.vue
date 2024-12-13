@@ -5,7 +5,7 @@
   </template>
   
   <script>
-  import { getEmoji } from "@/api/emoji";
+  import { getEmojiPie } from "@/api/emoji";
   export default {
     name: 'PieChart',
     data() {
@@ -27,13 +27,19 @@
               {name:'害怕',value:8},
               {name:'怒火中烧',value:12},
               {name:'睡着了',value:7},
-              {name:'放声大哭',value:13}]
+              {name:'放声大哭',value:13}],
+              label: {
+            normal: {
+              position: 'outside', // 标签显示在饼图外部
+              formatter: '{b}({d}%)' // 标签格式
+            }
+          },
           }]
         },
       };
     },
     mounted(){
-      getEmoji().then(res => {
+      getEmojiPie().then(res => {
       console.log(res.data.data);
       this.chartOptions.series[0].data = res.data.data;
       });

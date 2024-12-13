@@ -6,6 +6,7 @@
   
   <script>
   import { getEmoji } from "@/api/emoji";
+  import * as echarts from 'echarts';
   export default {
     name: 'EmojiCount',
     data() {
@@ -32,6 +33,19 @@
               name: '使用数',
               type: 'line',
               data: [10, 15, 5, 14, 11, 19, 8, 12, 7, 13],
+              areaStyle: {
+              opacity: 0.8,
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                {
+                  offset: 0,
+                  color: 'rgba(80,215,237,0.99)'
+                },
+                {
+                  offset: 1,
+                  color: 'rgb(28,70,206)'
+                }
+              ])
+            },
             },
           ],
         },
