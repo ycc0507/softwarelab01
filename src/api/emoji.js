@@ -6,11 +6,18 @@ export function getEmoji() {
     })
 }
 
-export function emojipage(title,page=1,limit=10){
+export function emojiPage(title,page=1,limit=10){
     return request({
-        url:  '/tours',
+        url:  '/emojiPage',
         method: 'get',
         params: {title, page, limit}
     })
 }
 
+export function  addEmoji(data){
+    return request({
+        url:  '/addEmoji',
+        method: 'post',
+        data
+    })
+}

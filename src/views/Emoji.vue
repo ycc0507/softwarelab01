@@ -78,7 +78,7 @@
   </template>
   
   <script>
-  import { emojipage } from '@/api/emoji';
+  import { emojiPage } from '@/api/emoji';
   export default {
     data() {
     return {
@@ -119,7 +119,7 @@
     },
     //加载数据
     loadData() {
-        emojipage(this.searchTitle, this.currentPage, this.pageSize).then(res => {
+        emojiPage(this.searchTitle, this.currentPage, this.pageSize).then(res => {
           console.log(res.data.data.records);
           this.emojis = res.data.data.records
           this.totalItems = res.data.data.total
