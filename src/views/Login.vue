@@ -53,8 +53,7 @@
     methods: {
       handleLogin() {
       console.log('登录', this.form);
-      login(this.form).then(res=>{
-        alert(res) 
+      login(this.form).then(res=>{ 
         // 假设 res.data 包含用户信息
 				if (res.data && res.data.code==0) {          
 				// 保存用户信息和登录状态

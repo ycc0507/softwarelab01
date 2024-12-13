@@ -50,7 +50,7 @@
     data() {
     return {
       activeIndex: '/dashboard',
-      username: '未登录', // 替换为实际用户名
+      username: JSON.parse(localStorage.getItem('user')), // 替换为实际用户名
       // avatarUrl: 'https://via.placeholder.com/40' // 替换为实际头像 URL
       avatarUrl: require("@/assets/avatar.jpg") // 也可以使用 require 语法引入图片
     };
@@ -65,7 +65,7 @@
       // 这里可以设置用户状态到组件的 data 中
     } else {
       alert('用户未登录');
-      /* this.$router.push('/login') */
+      this.$router.push('/login')
     }
   },
 
