@@ -8,6 +8,8 @@ import 'echarts';
 import './assets/styles/global.css'; // 引入全局样式覆盖文件
 
 
+Vue.use(ElementUI)
+
 Vue.component('v-chart', ECharts);
 Vue.use(ElementUI)
 

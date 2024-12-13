@@ -40,6 +40,17 @@ const routes = [
         ]
     },
     // 其他路由
+    {
+        path: '/login',
+        component:()=> import('@/views/Login'),
+        name: 'Login'
+    },
+    {
+        path: '/register',
+        component:()=> import('@/views/Register.vue'),
+        name: 'Register'
+    },
+
 ];
 
 const router = new Router({

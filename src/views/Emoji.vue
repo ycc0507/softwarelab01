@@ -2,7 +2,7 @@
     <div class="emojis-container">
         <el-card class="box-card">
         <div slot="header" class="header">
-          <span class="header-title">旅游景点管理</span>
+          <span class="header-title">Emoji管理</span>
           <div class="header-controls">
             <el-input v-model="searchTitle" placeholder="输入标题进行搜索" class="search-input"></el-input>
             <el-button type="primary" @click="fetchData">搜索</el-button>
@@ -84,7 +84,7 @@
     return {
       searchTitle: '',
       emojis: [],
-/*        emojis: [
+       emojis: [
          { id: "0001", emoji: '呵呵', username: '张三', date: '2021-01-01' },
          { id: "0002", emoji: '嘿嘿', username: '李四', date: '2021-01-02' },
          { id: "0003", emoji: '笑哭了', username: '王五', date: '2021-01-03' },
@@ -95,7 +95,7 @@
          { id: "0008", emoji: '怒火中烧', username: '吴十', date: '2021-01-08' },
          { id: "0009", emoji: '睡着了', username: '郑十一', date: '2021-01-09' },
          { id: "0010", emoji: '放声大哭', username: '王十二', date: '2021-01-10' },
-       ], */
+       ],
       dialogVisible: false,
       form: {},
       formLabelWidth: '100px',
@@ -133,6 +133,16 @@
     handleSizeChange(size) {
       this.pageSize = size;
       this.loadData();
+    },
+    handleAddTour() {
+      this.dialogTitle = '新增景点'
+      this.dialogVisible = true;
+      this.form = {
+        id: '',
+        emoji: '',
+        username: '',
+        date: '',
+      };
     },
 }
 
