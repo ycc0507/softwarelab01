@@ -67,11 +67,18 @@ export default {
     handleRegister() {
       // 检查两个密码是否相等
       if (this.form.password !== this.form.password2) {
-        alert('两次输入的密码不一致', 'error'); //上一期中封装的消息插件
+        alert("两次输入的密码不一致!"); //上一期中封装的消息插件
         return
       }
       console.log('注册', this.form);
       register(this.form).then((res)=>{
+        if(res.data.code == 1){
+          alert("注册失败，用户名已存在!");
+        }
+        else if(res.data && res.data.code==0) {
+          alert("注册成功，请登录!");
+          this.$router.push('/login');
+        }
         alert(res)   //上一期中封装的消息插件
       })
     },

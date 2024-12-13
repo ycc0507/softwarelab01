@@ -54,9 +54,13 @@
       handleLogin() {
       console.log('登录', this.form);
       login(this.form).then(res=>{ 
+        if(res.data.code == 1){
+          alert("登录失败，用户名或密码错误");
+        }
         // 假设 res.data 包含用户信息
-				if (res.data && res.data.code==0) {          
+				else if (res.data && res.data.code==0) {          
 				// 保存用户信息和登录状态
+          alert("登录成功");
           localStorage.setItem('user', JSON.stringify(res.data.data)); // 保存用户信息
           localStorage.setItem('isLogin', 'true'); // 标记用户为已登录
           // 跳转到主页
