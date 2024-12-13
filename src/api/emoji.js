@@ -6,13 +6,6 @@ export function getEmoji() {
     })
 }
 
-export function getEmojiPie() {
-    return request({
-        url:  '/EmojiCountPie',
-        method: 'get'
-    })
-}
-
 export function  tours(title,page=1,limit=10){
     return request({
         url:  '/tours',

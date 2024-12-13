@@ -5,7 +5,7 @@
   </template>
   
   <script>
-  import { getEmojiPie } from "@/api/emoji";
+  import { getEmoji } from "@/api/emoji";
   export default {
     name: 'PieChart',
     data() {
@@ -39,7 +39,7 @@
       };
     },
     mounted(){
-      getEmojiPie().then(res => {
+      getEmoji().then(res => {
       console.log(res.data.data);
       this.chartOptions.series[0].data = res.data.data;
       });
