@@ -25,7 +25,6 @@
           <el-table-column prop="emoji" label="表情名称" min-width="180"></el-table-column>
           <el-table-column prop="username" label="发送人" min-width="180"></el-table-column>
           <el-table-column prop="date" label="发送时间" min-width="180"></el-table-column>
-          </el-table-column>
         </el-table>
 
         <el-pagination
@@ -68,7 +67,7 @@
   
   <script>
   import { emojiPage } from '@/api/emoji';
-  import { addEmoji } from '@/api/emoji';
+  const username01 = JSON.parse(localStorage.getItem('user'));
   export default {
     data() {
     return {
@@ -127,7 +126,6 @@
     handleAddEmoji() {
       this.dialogTitle = '新增Emoji消息'
       this.dialogVisible = true;
-      const username01 = JSON.parse(localStorage.getItem('user')).username;
       this.form = {
         id: '',
         username: username01,
@@ -137,10 +135,10 @@
         addEmoji(this.form).then(res=>{
           console.log(res.data)
           if(res.data.code == 0){
-            alart("添加成功");
+            alert("添加成功");
             }
             else{
-              alart("添加失败");
+              alert("添加失败");
             }
         })
       this.dialogVisible = false;

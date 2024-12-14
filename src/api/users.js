@@ -18,3 +18,18 @@ export function register(data) {
     })
 }
 
+export function userPage(title,page=1,limit=10){
+    return request({
+        url:  '/userPage',
+        method: 'get',
+        params: {title, page, limit}
+    })
+}
+
+export function  permisson(data){
+    return request({
+        url:  '/permisson',
+        method: 'post',
+        data
+    })
+}

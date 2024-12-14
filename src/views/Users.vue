@@ -2,97 +2,129 @@
   <div class="users-container">
     <el-card class="box-card">
       <div slot="header" class="header">
-        <span>用户管理</span>
-        <el-button style="float: right; " type="primary" @click="handleAddUser">添加用户</el-button>
+        <span class="header-title">用户管理</span>
+        <div class="header-controls">
+          <el-input v-model="searchParam" placeholder="输入标题进行搜索" class="search-input"></el-input>
+          <el-button type="primary" @click="fetchData">搜索</el-button>
+        </div>
       </div>
       <el-table :data="users" style="width: 100%">
-        <el-table-column prop="id" label="ID" width="50"></el-table-column>
-        <el-table-column prop="name" label="姓名" width="180"></el-table-column>
-        <el-table-column prop="email" label="邮箱"></el-table-column>
-        <el-table-column label="操作" width="180">
+        <el-table-column prop="username" label="账号" min-width="180"></el-table-column>
+        <el-table-column prop="name" label="用户名" min-width="180"></el-table-column>
+        <el-table-column prop="email" label="邮箱" min-width="180"></el-table-column>
+<!--        <el-table-column prop="intro" label="签名" min-width="180"></el-table-column>-->
+        <el-table-column prop="state"label="有/无管理员权限" width="180">
           <template slot-scope="scope">
-            <el-button @click="handleEditUser(scope.row)" type="text" size="small">编辑</el-button>
-            <el-button @click="handleDeleteUser(scope.row)" type="text" size="small">删除</el-button>
+           <el-switch
+                v-model="scope.row.state"
+                active-color="#13ce66"
+                inactive-color="#ff4949"
+                :active-value="1"
+                :inactive-value="2"
+                @click="handleSwitch( $event, scope.row, scope.row.$username)"
+            />
           </template>
         </el-table-column>
       </el-table>
+
+      <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage"
+          :page-size="pageSize"
+          :total="totalItems"
+          layout="total, sizes, prev, pager, next, jumper"
+      />
     </el-card>
 
-    <el-dialog title="添加用户" :visible.sync="dialogVisible">
-      <el-form :model="form">
-        <el-form-item label="姓名" :label-width="formLabelWidth">
-          <el-input v-model="form.name"></el-input>
-        </el-form-item>
-        <el-form-item label="邮箱" :label-width="formLabelWidth">
-          <el-input v-model="form.email"></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="handleSaveUser">保存</el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
 
 <script>
+import { permisson } from '@/api/users';
 export default {
   data() {
     return {
-      users: [
-        { id: 1, name: '张三', email: 'zhangsan@example.com' },
-        { id: 2, name: '李四', email: 'lisi@example.com' },
-        { id: 3, name: '王五', email: 'wangwu@example.com' }
+      dialogTitle: '',
+      searchParam: '',
+      users: [],
+      users:[
+        { username: 'admin', name: '管理员', email: '111', state: 1},
+        { username: 'user', name: '用户', email: '222', state: 2},
       ],
-      dialogVisible: false,
-      form: {
-        name: '',
-        email: ''
-      },
-      formLabelWidth: '80px'
+      form: {},
+      formLabelWidth: '80px',
+      totalItems: 0,
+      currentPage: 1,
+      pageSize: 10,
     };
   },
+  mounted() {
+    this.currentPage = 1
+    this.loadData()
+  },
   methods: {
-    handleAddUser() {
-      this.dialogVisible = true;
-      this.form = { name: '', email: '' };
+    fetchData() {
+      this.loadData()
     },
-    handleEditUser(user) {
-      this.dialogVisible = true;
-      this.form = { ...user };
+    //加载数据
+    loadData() {
+      users(this.searchParam, this.currentPage, this.pageSize).then(res => {
+        this.records = res.data.data.records
+        this.totalItems = res.data.data.total
+      })
     },
-    handleDeleteUser(user) {
-      this.users = this.users.filter(u => u.id !== user.id);
+    handleCurrentChange(page) {
+      this.currentPage = page;
+      this.loadData();
     },
-    handleSaveUser() {
-      if (this.form.id) {
-        // Edit existing user
-        const index = this.users.findIndex(u => u.id === this.form.id);
-        if (index !== -1) {
-          this.$set(this.users, index, { ...this.form });
+    handleSizeChange(size) {
+      this.pageSize = size;
+      this.loadData();
+    },
+    handleSwitch(data, row, username) {
+      console.log(data, row, username);
+      permisson(data, row, username).then(res => {
+        if (res.data.code == 0) {
+          alert('操作成功');
+        } else {
+          alert('操作失败');
         }
-      } else {
-        // Add new user
-        const newUser = { ...this.form, id: this.users.length + 1 };
-        this.users.push(newUser);
-      }
-      this.dialogVisible = false;
+      });
     }
-  }
-};
+},
+}
 </script>
 
 <style scoped>
-.users-container {
+.tours-container {
   padding: 20px;
 }
 
-.header{
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 10px 20px;
+}
+
+.dialog-footer {
+  text-align: right;
+}
+
+.header-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  width: 300px;
+  margin-right: 10px; /* Adjust spacing between input and buttons */
 }
 </style>
 
-
-  
