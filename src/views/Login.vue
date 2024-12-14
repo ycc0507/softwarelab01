@@ -2,7 +2,7 @@
     <div id="login-page">
       <el-container>
         <el-header>
-          <h1>🏝 旅游分析系统登录</h1>
+          <h1>表情符号管理系统系统登录</h1>
         </el-header>
         <el-main class="main-content">
           <div class="login-container">

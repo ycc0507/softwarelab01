@@ -23,13 +23,8 @@
             </template>
           </el-table-column>
           <el-table-column prop="emoji" label="表情名称" min-width="180"></el-table-column>
-          <el-table-column prop="username" label="发送人" min-width="100"></el-table-column>
-          <el-table-column prop="date" label="发送时间" min-width="100"></el-table-column>
-          <el-table-column label="操作" min-width="180">
-            <template slot-scope="scope">
-              <el-button @click="handleEditTour(scope.row)" type="text" size="small">编辑</el-button>
-              <el-button @click="handleDeleteTour(scope.row)" type="text" size="small">删除</el-button>
-            </template>
+          <el-table-column prop="username" label="发送人" min-width="180"></el-table-column>
+          <el-table-column prop="date" label="发送时间" min-width="180"></el-table-column>
           </el-table-column>
         </el-table>
 
@@ -73,6 +68,7 @@
   
   <script>
   import { emojiPage } from '@/api/emoji';
+  import { addEmoji } from '@/api/emoji';
   export default {
     data() {
     return {
@@ -137,8 +133,8 @@
         username: username01,
       };
     },
-    handleSaveTour() {
-        addTour(this.form).then(res=>{
+    handleSaveEmoji() {
+        addEmoji(this.form).then(res=>{
           console.log(res.data)
           if(res.data.code == 0){
             alart("添加成功");
@@ -149,6 +145,7 @@
         })
       this.dialogVisible = false;
     },
+
 
 }
 
