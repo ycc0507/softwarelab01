@@ -33,3 +33,19 @@ export function  permisson(data){
         data
     })
 }
+
+export function getUserInfo(id){
+    return request({
+        url:  '/getUserInfo',
+        method: 'get',
+        id
+    })
+}
+
+export function update(data){
+    return request({
+        url:  '/update',
+        method: 'post',
+        data
+    })
+}

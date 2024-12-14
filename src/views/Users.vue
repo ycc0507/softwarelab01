@@ -42,6 +42,7 @@
 
 <script>
 import { permisson } from '@/api/users';
+import { userPage } from '@/api/users';
 export default {
   data() {
     return {
@@ -69,7 +70,7 @@ export default {
     },
     //加载数据
     loadData() {
-      users(this.searchParam, this.currentPage, this.pageSize).then(res => {
+      userPage(this.searchParam, this.currentPage, this.pageSize).then(res => {
         this.records = res.data.data.records
         this.totalItems = res.data.data.total
       })

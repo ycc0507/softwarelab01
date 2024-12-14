@@ -61,7 +61,7 @@
 				else if (res.data && res.data.code==0) {          
 				// 保存用户信息和登录状态
           alert("登录成功");
-          localStorage.setItem('user', JSON.stringify(res.data.data)); // 保存用户信息
+          localStorage.setItem('username', JSON.stringify(res.data.username)); // 保存用户信息
           localStorage.setItem('isLogin', 'true'); // 标记用户为已登录
           // 跳转到主页
           this.$router.push('/');
