@@ -65,7 +65,7 @@
       // 这里可以设置用户状态到组件的 data 中
     } else {
       alert('用户未登录');
-      this.$router.push('/login')
+      /* this.$router.push('/login') */
     }
   },
 

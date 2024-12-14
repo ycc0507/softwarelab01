@@ -67,7 +67,7 @@ export default {
     handleRegister() {
       // 检查两个密码是否相等
       if (this.form.password !== this.form.password2) {
-        alert("两次输入的密码不一致!"); //上一期中封装的消息插件
+        alert("两次输入的密码不一致!"); 
         return
       }
       console.log('注册', this.form);
@@ -79,7 +79,7 @@ export default {
           alert("注册成功，请登录!");
           this.$router.push('/login');
         }
-        alert(res)   //上一期中封装的消息插件
+        alert(res)  
       })
     },
     resetForm() {

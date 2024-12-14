@@ -2,11 +2,11 @@
     <div class="emojis-container">
         <el-card class="box-card">
         <div slot="header" class="header">
-          <span class="header-title">Emoji管理</span>
+          <span class="header-title">Emoji消息管理</span>
           <div class="header-controls">
-            <el-input v-model="searchTitle" placeholder="输入标题进行搜索" class="search-input"></el-input>
+            <el-input v-model="searchTitle" placeholder="输入发送人进行搜索" class="search-input"></el-input>
             <el-button type="primary" @click="fetchData">搜索</el-button>
-            <el-button type="success" @click="handleAddTour">添加景点</el-button>
+            <el-button type="success" @click="handleAddEmoji">添加Emoji消息</el-button>
           </div>
         </div>
 
@@ -44,36 +44,30 @@
 
       </el-card>
 
-  
-      <el-dialog title="编辑景点" :visible.sync="dialogVisible">
-        <el-form :model="form">
-          <el-form-item label="景点名称" :label-width="formLabelWidth">
-            <el-input v-model="form.name"></el-input>
-          </el-form-item>
-          <el-form-item label="别名" :label-width="formLabelWidth">
-            <el-input v-model="form.alias"></el-input>
-          </el-form-item>
-          <el-form-item label="评论数" :label-width="formLabelWidth">
-            <el-input v-model="form.reviewCount" type="number"></el-input>
-          </el-form-item>
-          <el-form-item label="评分" :label-width="formLabelWidth">
-            <el-input v-model="form.rating" type="number"></el-input>
-          </el-form-item>
-          <el-form-item label="精选评论" :label-width="formLabelWidth">
-            <el-input v-model="form.featuredReview"></el-input>
-          </el-form-item>
-          <el-form-item label="国家" :label-width="formLabelWidth">
-            <el-input v-model="form.country"></el-input>
-          </el-form-item>
-          <el-form-item label="城市" :label-width="formLabelWidth">
-            <el-input v-model="form.city"></el-input>
-          </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogVisible = false">取消</el-button>
-          <el-button type="primary" @click="handleSaveTour">保存</el-button>
-        </div>
-      </el-dialog>
+
+      <el-dialog :title="dialogTitle" :visible.sync="dialogVisible">
+      <el-form :model="form">
+        <el-form-item label="请选择表情">
+        <el-select v-model="form.id" placeholder="请选择表情类型">
+            <el-option label="呵呵" value="0001"></el-option>
+            <el-option label="嘿嘿" value="0002"></el-option>
+            <el-option label="笑哭了" value="0003"></el-option>
+            <el-option label="吐舌" value="0004"></el-option>
+            <el-option label="翻白眼" value="0005"></el-option>
+            <el-option label="脸发烧" value="0006"></el-option>
+            <el-option label="害怕" value="0007"></el-option>
+            <el-option label="怒火中烧" value="0008"></el-option>
+            <el-option label="睡着了" value="0009"></el-option>
+            <el-option label="放声大哭" value="0010"></el-option>
+        </el-select>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="handleSaveEmoji">保存</el-button>
+      </div>
+    </el-dialog>
+
     </div>
   </template>
   
@@ -134,16 +128,28 @@
       this.pageSize = size;
       this.loadData();
     },
-    handleAddTour() {
-      this.dialogTitle = '新增景点'
+    handleAddEmoji() {
+      this.dialogTitle = '新增Emoji消息'
       this.dialogVisible = true;
+      const username01 = JSON.parse(localStorage.getItem('user')).username;
       this.form = {
         id: '',
-        emoji: '',
-        username: '',
-        date: '',
+        username: username01,
       };
     },
+    handleSaveTour() {
+        addTour(this.form).then(res=>{
+          console.log(res.data)
+          if(res.data.code == 0){
+            alart("添加成功");
+            }
+            else{
+              alart("添加失败");
+            }
+        })
+      this.dialogVisible = false;
+    },
+
 }
 
   };
